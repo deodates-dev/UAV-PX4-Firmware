@@ -97,7 +97,7 @@
  * Name: read
  ****************************************************************************/
 
-inline static void read(bootloader_app_shared_t *pshared)
+inline static void _read(bootloader_app_shared_t *pshared)
 {
 	pshared->signature = getreg32(signature_LOC);
 	pshared->bus_speed = getreg32(bus_speed_LOC);
@@ -111,7 +111,7 @@ inline static void read(bootloader_app_shared_t *pshared)
  * Name: write
  ****************************************************************************/
 
-inline static void write(bootloader_app_shared_t *pshared)
+inline static void _write(bootloader_app_shared_t *pshared)
 {
 	putreg32(pshared->signature, signature_LOC);
 	putreg32(pshared->bus_speed, bus_speed_LOC);
@@ -189,7 +189,7 @@ int bootloader_app_shared_read(bootloader_app_shared_t *shared,
 	int rv = -EBADR;
 	bootloader_app_shared_t working;
 
-	read(&working);
+	_read(&working);
 
 	if ((role == App ? working.signature == BOOTLOADER_COMMON_APP_SIGNATURE
 	     : working.signature == BOOTLOADER_COMMON_BOOTLOADER_SIGNATURE)
@@ -234,7 +234,7 @@ void bootloader_app_shared_write(bootloader_app_shared_t *shared,
 		 App ? BOOTLOADER_COMMON_APP_SIGNATURE :
 		 BOOTLOADER_COMMON_BOOTLOADER_SIGNATURE);
 	working.crc.ull = calulate_signature(&working);
-	write(&working);
+	_write(&working);
 
 }
 
@@ -261,5 +261,5 @@ void bootloader_app_shared_invalidate(void)
 {
 	bootloader_app_shared_t working;
 	bootloader_app_shared_init(&working, Invalid);
-	write(&working);
+	_write(&working);
 }
