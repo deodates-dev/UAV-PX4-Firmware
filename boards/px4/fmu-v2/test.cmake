@@ -40,13 +40,12 @@ px4_add_board(
 		imu/lsm303d
 		imu/invensense/mpu6000
 		#imu/invensense/mpu9250
-		#iridiumsbd
 		#irlock
 		lights/rgbled
 		#magnetometer # all available magnetometer drivers
 		magnetometer/hmc5883
 		#optical_flow # all available optical flow drivers
-		optical_flow/px4flow
+		#optical_flow/px4flow
 		#osd
 		#pca9685
 		#protocol_splitter
@@ -98,6 +97,7 @@ px4_add_board(
 		#i2cdetect
 		#led_control
 		mft
+		microbench
 		mixer
 		#motor_ramp
 		#motor_test

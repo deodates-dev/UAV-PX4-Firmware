@@ -34,6 +34,8 @@
 # Support IN_LIST if() operator
 cmake_policy(SET CMP0057 NEW)
 
+include(px4_list_make_absolute)
+
 set(msg_files
 	actuator_armed.msg
 	actuator_controls.msg
@@ -42,6 +44,7 @@ set(msg_files
 	airspeed.msg
 	airspeed_validated.msg
 	airspeed_wind.msg
+	baro_bias_estimate.msg
 	battery_status.msg
 	camera_capture.msg
 	camera_trigger.msg
@@ -55,6 +58,7 @@ set(msg_files
 	distance_sensor.msg
 	ekf2_timestamps.msg
 	ekf_gps_drift.msg
+	event.msg
 	esc_report.msg
 	esc_status.msg
 	estimator_event_flags.msg
@@ -228,6 +232,8 @@ if(invalid_msgs)
 		message(FATAL_ERROR "'${invalid_msgs}' is listed as deprecated. Please use a different name for the message.")
 	endif()
 endif()
+
+px4_list_make_absolute(msg_files ${CMAKE_CURRENT_SOURCE_DIR} ${msg_files})
 
 if(NOT EXTERNAL_MODULES_LOCATION STREQUAL "")
 	# Check that the msg directory and the CMakeLists.txt file exists
